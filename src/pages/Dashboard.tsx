@@ -20,51 +20,51 @@ export default function Dashboard() {
 
   const stats = [
     {
-      title: "This Month's Commission",
-      value: `$${currentCommission.toLocaleString()}`,
-      change: "+12.5%",
+      title: "Provision diesen Monat",
+      value: `${currentCommission.toLocaleString()} €`,
+      change: "+12,5%",
       trend: "up",
       icon: DollarSign,
-      description: "vs last month"
+      description: "vs. letzter Monat"
     },
     {
-      title: "Sales Volume",
-      value: "$145,230",
-      change: "+8.2%", 
+      title: "Verkaufsvolumen",
+      value: "145.230 €",
+      change: "+8,2%", 
       trend: "up",
       icon: TrendingUp,
-      description: "total sales this month"
+      description: "Gesamtumsatz diesen Monat"
     },
     {
-      title: "Goal Progress",
+      title: "Zielfortschritt",
       value: `${Math.round(progressPercentage)}%`,
-      change: "3 days ahead",
+      change: "3 Tage voraus",
       trend: "up",
       icon: Target,
-      description: "of monthly target"
+      description: "des Monatsziels"
     },
     {
-      title: "Current Tier",
+      title: "Aktuelle Stufe",
       value: "Gold",
-      change: "Next: Platinum",
+      change: "Nächste: Platin",
       trend: "neutral",
       icon: Award,
-      description: "commission tier"
+      description: "Provisionsstufe"
     }
   ];
 
   const recentTransactions = [
-    { id: 1, client: "Acme Corp", product: "Enterprise License", amount: 25000, commission: 1250, date: "2024-01-15" },
-    { id: 2, client: "TechStart Inc", product: "Professional Plan", amount: 12000, commission: 960, date: "2024-01-14" },
-    { id: 3, client: "Global Systems", product: "Premium Support", amount: 8500, commission: 425, date: "2024-01-13" },
-    { id: 4, client: "Innovation Labs", product: "Basic Plan", amount: 5000, commission: 300, date: "2024-01-12" },
+    { id: 1, client: "Acme GmbH", product: "Enterprise-Lizenz", amount: 25000, commission: 1250, date: "15.01.2024" },
+    { id: 2, client: "TechStart AG", product: "Professional-Plan", amount: 12000, commission: 960, date: "14.01.2024" },
+    { id: 3, client: "Global Systems", product: "Premium-Support", amount: 8500, commission: 425, date: "13.01.2024" },
+    { id: 4, client: "Innovation Labs", product: "Basis-Plan", amount: 5000, commission: 300, date: "12.01.2024" },
   ];
 
   const tierProgress = [
     { tier: "Bronze", threshold: 5000, reached: true },
-    { tier: "Silver", threshold: 8000, reached: true },
+    { tier: "Silber", threshold: 8000, reached: true },
     { tier: "Gold", threshold: 10000, reached: false, current: true },
-    { tier: "Platinum", threshold: 15000, reached: false },
+    { tier: "Platin", threshold: 15000, reached: false },
   ];
 
   return (
@@ -72,17 +72,17 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Welcome back, John!</h1>
-          <p className="text-muted-foreground">Here's your commission overview for January 2024</p>
+          <h1 className="text-3xl font-bold text-foreground">Willkommen zurück, Max!</h1>
+          <p className="text-muted-foreground">Hier ist Ihre Provisionsübersicht für Januar 2024</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" className="flex items-center space-x-2">
             <Calendar className="w-4 h-4" />
-            <span>This Month</span>
+            <span>Dieser Monat</span>
           </Button>
           <Button className="flex items-center space-x-2">
             <FileText className="w-4 h-4" />
-            <span>Download Report</span>
+            <span>Bericht herunterladen</span>
           </Button>
         </div>
       </div>
@@ -123,25 +123,25 @@ export default function Dashboard() {
         {/* Goal Progress */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Monthly Goal Progress</CardTitle>
-            <CardDescription>Track your progress towards this month's commission goal</CardDescription>
+            <CardTitle>Monatlicher Zielfortschritt</CardTitle>
+            <CardDescription>Verfolgen Sie Ihren Fortschritt zu Ihrem Provisionsziel für diesen Monat</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Current: ${currentCommission.toLocaleString()}</span>
-              <span className="text-sm text-muted-foreground">Goal: ${monthlyGoal.toLocaleString()}</span>
+              <span className="text-sm font-medium">Aktuell: {currentCommission.toLocaleString()} €</span>
+              <span className="text-sm text-muted-foreground">Ziel: {monthlyGoal.toLocaleString()} €</span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
             <div className="flex items-center justify-between text-sm">
-              <span className="text-success font-medium">{Math.round(progressPercentage)}% complete</span>
+              <span className="text-success font-medium">{Math.round(progressPercentage)}% erreicht</span>
               <span className="text-muted-foreground">
-                ${(monthlyGoal - currentCommission).toLocaleString()} remaining
+                {(monthlyGoal - currentCommission).toLocaleString()} € verbleibend
               </span>
             </div>
             
             {/* Tier Progress */}
             <div className="mt-6">
-              <h4 className="text-sm font-medium mb-3">Commission Tiers</h4>
+              <h4 className="text-sm font-medium mb-3">Provisionsstufen</h4>
               <div className="space-y-2">
                 {tierProgress.map((tier) => (
                   <div key={tier.tier} className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
@@ -153,9 +153,9 @@ export default function Dashboard() {
                       <span className={`text-sm font-medium ${tier.current ? 'text-foreground' : 'text-muted-foreground'}`}>
                         {tier.tier}
                       </span>
-                      {tier.current && <Badge variant="secondary" className="text-xs">Current</Badge>}
+                      {tier.current && <Badge variant="secondary" className="text-xs">Aktuell</Badge>}
                     </div>
-                    <span className="text-sm text-muted-foreground">${tier.threshold.toLocaleString()}</span>
+                    <span className="text-sm text-muted-foreground">{tier.threshold.toLocaleString()} €</span>
                   </div>
                 ))}
               </div>
@@ -166,25 +166,25 @@ export default function Dashboard() {
         {/* Quick Actions */}
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks and tools</CardDescription>
+            <CardTitle>Schnellaktionen</CardTitle>
+            <CardDescription>Häufige Aufgaben und Tools</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button className="w-full justify-start" variant="outline">
               <TrendingUp className="w-4 h-4 mr-2" />
-              View Performance Report
+              Leistungsbericht anzeigen
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <FileText className="w-4 h-4 mr-2" />
-              Upload Sales Data
+              Verkaufsdaten hochladen
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <Target className="w-4 h-4 mr-2" />
-              What-If Calculator
+              Was-Wäre-Wenn-Rechner
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <Calendar className="w-4 h-4 mr-2" />
-              Commission History
+              Provisionsverlauf
             </Button>
           </CardContent>
         </Card>
@@ -193,8 +193,8 @@ export default function Dashboard() {
       {/* Recent Transactions */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
-          <CardDescription>Your latest commission-eligible sales</CardDescription>
+          <CardTitle>Aktuelle Transaktionen</CardTitle>
+          <CardDescription>Ihre neuesten provisionsberechtigten Verkäufe</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -209,8 +209,8 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium text-foreground">${transaction.amount.toLocaleString()}</p>
-                  <p className="text-sm text-success">+${transaction.commission}</p>
+                  <p className="font-medium text-foreground">{transaction.amount.toLocaleString()} €</p>
+                  <p className="text-sm text-success">+{transaction.commission} €</p>
                 </div>
                 <div className="text-right ml-4">
                   <p className="text-sm text-muted-foreground">{transaction.date}</p>
@@ -220,7 +220,7 @@ export default function Dashboard() {
           </div>
           <div className="mt-4">
             <Button variant="outline" className="w-full">
-              View All Transactions
+              Alle Transaktionen anzeigen
             </Button>
           </div>
         </CardContent>

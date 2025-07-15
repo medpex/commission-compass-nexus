@@ -30,26 +30,26 @@ const navigation = [
   {
     title: "Dashboard",
     items: [
-      { title: "Overview", url: "/", icon: BarChart3 },
-      { title: "My Commission", url: "/commission", icon: DollarSign },
-      { title: "Performance", url: "/performance", icon: TrendingUp },
+      { title: "Übersicht", url: "/", icon: BarChart3 },
+      { title: "Meine Provision", url: "/commission", icon: DollarSign },
+      { title: "Leistung", url: "/performance", icon: TrendingUp },
     ]
   },
   {
-    title: "Sales Management",
+    title: "Verkaufsmanagement",
     items: [
-      { title: "Sales Data", url: "/sales", icon: FileSpreadsheet },
-      { title: "Products", url: "/products", icon: Package },
-      { title: "Goals & Targets", url: "/targets", icon: Target },
+      { title: "Verkaufsdaten", url: "/sales", icon: FileSpreadsheet },
+      { title: "Produkte", url: "/products", icon: Package },
+      { title: "Ziele & Vorgaben", url: "/targets", icon: Target },
     ]
   },
   {
     title: "Administration",
     items: [
-      { title: "Sales Reps", url: "/reps", icon: Users },
-      { title: "Commission Plans", url: "/plans", icon: Calculator },
-      { title: "Notifications", url: "/notifications", icon: Bell },
-      { title: "Settings", url: "/settings", icon: Settings },
+      { title: "Vertriebsmitarbeiter", url: "/reps", icon: Users },
+      { title: "Provisionspläne", url: "/plans", icon: Calculator },
+      { title: "Benachrichtigungen", url: "/notifications", icon: Bell },
+      { title: "Einstellungen", url: "/settings", icon: Settings },
     ]
   }
 ];

@@ -30,7 +30,7 @@ export function Layout({ children }: LayoutProps) {
               <div className="hidden md:flex items-center space-x-2">
                 <Search className="w-4 h-4 text-muted-foreground" />
                 <Input 
-                  placeholder="Search transactions, reps, products..." 
+                  placeholder="Transaktionen, Mitarbeiter, Produkte suchen..." 
                   className="w-80 bg-muted/50"
                 />
               </div>
@@ -51,19 +51,19 @@ export function Layout({ children }: LayoutProps) {
                       <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="hidden md:block text-left">
-                      <div className="text-sm font-medium">John Smith</div>
-                      <div className="text-xs text-muted-foreground">Sales Rep</div>
+                      <div className="text-sm font-medium">Max Mustermann</div>
+                      <div className="text-xs text-muted-foreground">Vertriebsmitarbeiter</div>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>Mein Konto</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Commission History</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuItem>Profil</DropdownMenuItem>
+                  <DropdownMenuItem>Provisionsverlauf</DropdownMenuItem>
+                  <DropdownMenuItem>Einstellungen</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem>Abmelden</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
