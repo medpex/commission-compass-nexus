@@ -9,8 +9,6 @@ import Commission from "./pages/Commission";
 import Sales from "./pages/Sales";
 import Products from "./pages/Products";
 import Reps from "./pages/Reps";
-import Plans from "./pages/Plans";
-import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -29,8 +27,6 @@ const App = () => (
             <Route path="/sales" element={<Sales />} />
             <Route path="/products" element={<Products />} />
             <Route path="/reps" element={<Reps />} />
-            <Route path="/plans" element={<Plans />} />
-            <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

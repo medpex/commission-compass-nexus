@@ -1,13 +1,33 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Mail, Phone, Edit, Users, Award, TrendingUp } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Plus, Search, Mail, Phone, Edit, Users, Award, TrendingUp, Trash2 } from "lucide-react";
+
+interface Mitarbeiter {
+  id: string;
+  name: string;
+  email: string;
+  telefon: string;
+  team: string;
+  position: string;
+  startdatum: string;
+  umsatz: number;
+  ziel: number;
+  zielerreichung: number;
+  provision: number;
+  status: string;
+}
 
 export default function Reps() {
-  const vertriebsmitarbeiter = [
+  const [vertriebsmitarbeiter, setVertriebsmitarbeiter] = useState<Mitarbeiter[]>([
     {
       id: "VM001",
       name: "Anna Schmidt",
@@ -16,10 +36,10 @@ export default function Reps() {
       team: "Nord",
       position: "Senior Sales Rep",
       startdatum: "2022-03-15",
-      umsatz: "€168.500",
-      ziel: "€160.000",
+      umsatz: 168500,
+      ziel: 160000,
       zielerreichung: 105,
-      provision: "€5.055",
+      provision: 5055,
       status: "Aktiv"
     },
     {
@@ -30,10 +50,10 @@ export default function Reps() {
       team: "Süd",
       position: "Sales Representative",
       startdatum: "2023-01-10",
-      umsatz: "€134.000",
-      ziel: "€150.000",
+      umsatz: 134000,
+      ziel: 150000,
       zielerreichung: 89,
-      provision: "€4.020",
+      provision: 4020,
       status: "Aktiv"
     },
     {
@@ -44,10 +64,10 @@ export default function Reps() {
       team: "West",
       position: "Sales Representative",
       startdatum: "2022-08-20",
-      umsatz: "€141.750",
-      ziel: "€145.000",
+      umsatz: 141750,
+      ziel: 145000,
       zielerreichung: 98,
-      provision: "€4.252",
+      provision: 4252,
       status: "Aktiv"
     },
     {
@@ -58,10 +78,10 @@ export default function Reps() {
       team: "Ost",
       position: "Junior Sales Rep",
       startdatum: "2023-06-01",
-      umsatz: "€128.600",
-      ziel: "€140.000",
+      umsatz: 128600,
+      ziel: 140000,
       zielerreichung: 92,
-      provision: "€3.858",
+      provision: 3858,
       status: "Aktiv"
     },
     {
@@ -72,28 +92,134 @@ export default function Reps() {
       team: "Nord",
       position: "Senior Sales Rep",
       startdatum: "2021-11-12",
-      umsatz: "€162.250",
-      ziel: "€155.000",
+      umsatz: 162250,
+      ziel: 155000,
       zielerreichung: 105,
-      provision: "€4.867",
+      provision: 4867,
       status: "Aktiv"
     }
-  ];
+  ]);
 
-  const teamStatistiken = [
-    { team: "Nord", mitarbeiter: 2, umsatz: "€330.750", durchschnitt: "€165.375", zielerreichung: 105 },
-    { team: "Süd", mitarbeiter: 1, umsatz: "€134.000", durchschnitt: "€134.000", zielerreichung: 89 },
-    { team: "West", mitarbeiter: 1, umsatz: "€141.750", durchschnitt: "€141.750", zielerreichung: 98 },
-    { team: "Ost", mitarbeiter: 1, umsatz: "€128.600", durchschnitt: "€128.600", zielerreichung: 92 },
-  ];
+  const [editingMitarbeiter, setEditingMitarbeiter] = useState<Mitarbeiter | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    telefon: "",
+    team: "",
+    position: "",
+    startdatum: "",
+    status: "Aktiv"
+  });
 
-  const topPerformer = [
-    { name: "Anna Schmidt", umsatz: "€168.500", position: 1 },
-    { name: "Sarah Klein", umsatz: "€162.250", position: 2 },
-    { name: "Lisa Weber", umsatz: "€141.750", position: 3 },
-    { name: "Max Mustermann", umsatz: "€134.000", position: 4 },
-    { name: "Tom Fischer", umsatz: "€128.600", position: 5 },
-  ];
+  const teams = ["Nord", "Süd", "West", "Ost"];
+  const positionen = ["Junior Sales Rep", "Sales Representative", "Senior Sales Rep", "Team Lead"];
+
+  const handleAddMitarbeiter = () => {
+    setEditingMitarbeiter(null);
+    setFormData({
+      name: "",
+      email: "",
+      telefon: "",
+      team: "",
+      position: "",
+      startdatum: "",
+      status: "Aktiv"
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleEditMitarbeiter = (mitarbeiter: Mitarbeiter) => {
+    setEditingMitarbeiter(mitarbeiter);
+    setFormData({
+      name: mitarbeiter.name,
+      email: mitarbeiter.email,
+      telefon: mitarbeiter.telefon,
+      team: mitarbeiter.team,
+      position: mitarbeiter.position,
+      startdatum: mitarbeiter.startdatum,
+      status: mitarbeiter.status
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleSaveMitarbeiter = () => {
+    if (editingMitarbeiter) {
+      // Bearbeiten
+      setVertriebsmitarbeiter(prev => prev.map(m => 
+        m.id === editingMitarbeiter.id 
+          ? {
+              ...m,
+              name: formData.name,
+              email: formData.email,
+              telefon: formData.telefon,
+              team: formData.team,
+              position: formData.position,
+              startdatum: formData.startdatum,
+              status: formData.status
+            }
+          : m
+      ));
+    } else {
+      // Neu hinzufügen
+      const newMitarbeiter: Mitarbeiter = {
+        id: `VM${String(vertriebsmitarbeiter.length + 1).padStart(3, '0')}`,
+        name: formData.name,
+        email: formData.email,
+        telefon: formData.telefon,
+        team: formData.team,
+        position: formData.position,
+        startdatum: formData.startdatum,
+        umsatz: 0,
+        ziel: 100000,
+        zielerreichung: 0,
+        provision: 0,
+        status: formData.status
+      };
+      setVertriebsmitarbeiter(prev => [...prev, newMitarbeiter]);
+    }
+    setIsDialogOpen(false);
+  };
+
+  const handleDeleteMitarbeiter = (mitarbeiterId: string) => {
+    setVertriebsmitarbeiter(prev => prev.filter(m => m.id !== mitarbeiterId));
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0
+    }).format(amount);
+  };
+
+  const getTeamStatistiken = () => {
+    const stats: Record<string, { mitarbeiter: number; umsatz: number; durchschnitt: number; zielerreichung: number }> = {};
+    teams.forEach(team => {
+      const teamMembers = vertriebsmitarbeiter.filter(m => m.team === team);
+      const gesamtUmsatz = teamMembers.reduce((sum, m) => sum + m.umsatz, 0);
+      const durchschnittZielerreichung = teamMembers.length > 0 
+        ? teamMembers.reduce((sum, m) => sum + m.zielerreichung, 0) / teamMembers.length 
+        : 0;
+      
+      stats[team] = {
+        mitarbeiter: teamMembers.length,
+        umsatz: gesamtUmsatz,
+        durchschnitt: gesamtUmsatz / (teamMembers.length || 1),
+        zielerreichung: Math.round(durchschnittZielerreichung)
+      };
+    });
+    return stats;
+  };
+
+  const topPerformer = [...vertriebsmitarbeiter]
+    .sort((a, b) => b.umsatz - a.umsatz)
+    .slice(0, 5)
+    .map((m, index) => ({
+      name: m.name,
+      umsatz: m.umsatz,
+      position: index + 1
+    }));
 
   return (
     <div className="space-y-6">
@@ -102,7 +228,7 @@ export default function Reps() {
           <h1 className="text-3xl font-bold text-foreground">Vertriebsmitarbeiter</h1>
           <p className="text-muted-foreground">Verwaltung und Übersicht des Vertriebsteams</p>
         </div>
-        <Button>
+        <Button onClick={handleAddMitarbeiter}>
           <Plus className="w-4 h-4 mr-2" />
           Neuer Mitarbeiter
         </Button>
@@ -158,9 +284,30 @@ export default function Reps() {
                       <Badge variant={mitarbeiter.status === "Aktiv" ? "default" : "secondary"}>
                         {mitarbeiter.status}
                       </Badge>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditMitarbeiter(mitarbeiter)}>
                         <Edit className="w-4 h-4" />
                       </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <Trash2 className="w-4 h-4 text-destructive" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Mitarbeiter entfernen</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Sind Sie sicher, dass Sie {mitarbeiter.name} aus dem System entfernen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDeleteMitarbeiter(mitarbeiter.id)}>
+                              Entfernen
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
                 </CardHeader>
@@ -184,7 +331,7 @@ export default function Reps() {
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Umsatz:</span>
-                          <span className="font-bold">{mitarbeiter.umsatz}</span>
+                          <span className="font-bold">{formatCurrency(mitarbeiter.umsatz)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Zielerreichung:</span>
@@ -199,7 +346,7 @@ export default function Reps() {
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Mai 2024:</span>
-                          <span className="font-bold text-primary">{mitarbeiter.provision}</span>
+                          <span className="font-bold text-primary">{formatCurrency(mitarbeiter.provision)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Seit:</span>
@@ -216,28 +363,28 @@ export default function Reps() {
 
         <TabsContent value="teams" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {teamStatistiken.map((team, index) => (
-              <Card key={index}>
+            {Object.entries(getTeamStatistiken()).map(([team, stats]) => (
+              <Card key={team}>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Users className="w-5 h-5" />
-                    Team {team.team}
+                    Team {team}
                   </CardTitle>
-                  <CardDescription>{team.mitarbeiter} Mitarbeiter</CardDescription>
+                  <CardDescription>{stats.mitarbeiter} Mitarbeiter</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Gesamtumsatz:</span>
-                    <span className="font-bold">{team.umsatz}</span>
+                    <span className="font-bold">{formatCurrency(stats.umsatz)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Durchschnitt:</span>
-                    <span className="font-medium">{team.durchschnitt}</span>
+                    <span className="font-medium">{formatCurrency(stats.durchschnitt)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Zielerreichung:</span>
-                    <Badge variant={team.zielerreichung >= 100 ? "default" : "secondary"}>
-                      {team.zielerreichung}%
+                    <Badge variant={stats.zielerreichung >= 100 ? "default" : "secondary"}>
+                      {stats.zielerreichung}%
                     </Badge>
                   </div>
                 </CardContent>
@@ -273,7 +420,7 @@ export default function Reps() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold">{performer.umsatz}</p>
+                      <p className="font-bold">{formatCurrency(performer.umsatz)}</p>
                     </div>
                   </div>
                 ))}
@@ -282,6 +429,106 @@ export default function Reps() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Dialog für Mitarbeiter hinzufügen/bearbeiten */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {editingMitarbeiter ? "Mitarbeiter bearbeiten" : "Neuen Mitarbeiter hinzufügen"}
+            </DialogTitle>
+            <DialogDescription>
+              {editingMitarbeiter ? "Bearbeiten Sie die Mitarbeiterdaten." : "Fügen Sie einen neuen Mitarbeiter zum Team hinzu."}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="z.B. Anna Schmidt"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">E-Mail</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                placeholder="anna.schmidt@company.de"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="telefon">Telefon</Label>
+              <Input
+                id="telefon"
+                value={formData.telefon}
+                onChange={(e) => setFormData(prev => ({ ...prev, telefon: e.target.value }))}
+                placeholder="+49 123 456789"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="team">Team</Label>
+              <Select value={formData.team} onValueChange={(value) => setFormData(prev => ({ ...prev, team: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Team wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teams.map(team => (
+                    <SelectItem key={team} value={team}>{team}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="position">Position</Label>
+              <Select value={formData.position} onValueChange={(value) => setFormData(prev => ({ ...prev, position: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Position wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  {positionen.map(pos => (
+                    <SelectItem key={pos} value={pos}>{pos}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="startdatum">Startdatum</Label>
+              <Input
+                id="startdatum"
+                type="date"
+                value={formData.startdatum}
+                onChange={(e) => setFormData(prev => ({ ...prev, startdatum: e.target.value }))}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="status">Status</Label>
+              <Select value={formData.status} onValueChange={(value) => setFormData(prev => ({ ...prev, status: value }))}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Aktiv">Aktiv</SelectItem>
+                  <SelectItem value="Inaktiv">Inaktiv</SelectItem>
+                  <SelectItem value="Urlaub">Urlaub</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Abbrechen
+            </Button>
+            <Button onClick={handleSaveMitarbeiter}>
+              {editingMitarbeiter ? "Speichern" : "Hinzufügen"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

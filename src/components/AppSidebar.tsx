@@ -45,8 +45,6 @@ const navigation = [
     items: [
       { title: "Produkte", url: "/products", icon: Package },
       { title: "Vertriebsmitarbeiter", url: "/reps", icon: Users },
-      { title: "Provisionspläne", url: "/plans", icon: Calculator },
-      { title: "Benachrichtigungen", url: "/notifications", icon: Bell },
       { title: "Einstellungen", url: "/settings", icon: Settings },
     ]
   }
