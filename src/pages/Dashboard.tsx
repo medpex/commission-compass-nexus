@@ -62,8 +62,8 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Willkommen zurück, Max!</h1>
-          <p className="text-muted-foreground">Hier ist Ihre Provisionsübersicht für Januar 2024</p>
+          <h1 className="text-3xl font-bold text-foreground">Verkaufsübersicht - Innendienst</h1>
+          <p className="text-muted-foreground">Erfasste Verkäufe und berechnete Provisionen für Januar 2024</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" className="flex items-center space-x-2">
@@ -173,21 +173,21 @@ export default function Dashboard() {
             <CardDescription>Häufige Aufgaben und Tools</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button className="w-full justify-start" variant="outline">
-              <DollarSign className="w-4 h-4 mr-2" />
-              Provisionsrechner
+            <Button className="w-full justify-start" variant="default">
+              <FileText className="w-4 h-4 mr-2" />
+              Neuen Verkauf erfassen
             </Button>
             <Button className="w-full justify-start" variant="outline">
-              <FileText className="w-4 h-4 mr-2" />
-              Verkaufsdaten hochladen
+              <DollarSign className="w-4 h-4 mr-2" />
+              Provision berechnen
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <TrendingUp className="w-4 h-4 mr-2" />
-              Was-Wäre-Wenn-Rechner
+              Verkaufsübersicht
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <Calendar className="w-4 h-4 mr-2" />
-              Provisionsverlauf
+              Auszahlungsplan
             </Button>
           </CardContent>
         </Card>

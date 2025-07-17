@@ -28,22 +28,22 @@ import {
 
 const navigation = [
   {
-    title: "Dashboard",
+    title: "Verkaufserfassung",
     items: [
-      { title: "Übersicht", url: "/", icon: BarChart3 },
-      { title: "Meine Provision", url: "/commission", icon: DollarSign },
+      { title: "Neue Verkäufe", url: "/sales", icon: FileSpreadsheet },
+      { title: "Verkaufsübersicht", url: "/", icon: BarChart3 },
     ]
   },
   {
-    title: "Verkaufsmanagement",
+    title: "Provisionen",
     items: [
-      { title: "Verkaufsdaten", url: "/sales", icon: FileSpreadsheet },
+      { title: "Provisionsübersicht", url: "/commission", icon: DollarSign },
+    ]
+  },
+  {
+    title: "Verwaltung",
+    items: [
       { title: "Produkte", url: "/products", icon: Package },
-    ]
-  },
-  {
-    title: "Administration",
-    items: [
       { title: "Vertriebsmitarbeiter", url: "/reps", icon: Users },
       { title: "Provisionspläne", url: "/plans", icon: Calculator },
       { title: "Benachrichtigungen", url: "/notifications", icon: Bell },
