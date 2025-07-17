@@ -32,7 +32,6 @@ const navigation = [
     items: [
       { title: "Übersicht", url: "/", icon: BarChart3 },
       { title: "Meine Provision", url: "/commission", icon: DollarSign },
-      { title: "Leistung", url: "/performance", icon: TrendingUp },
     ]
   },
   {
@@ -40,7 +39,6 @@ const navigation = [
     items: [
       { title: "Verkaufsdaten", url: "/sales", icon: FileSpreadsheet },
       { title: "Produkte", url: "/products", icon: Package },
-      { title: "Ziele & Vorgaben", url: "/targets", icon: Target },
     ]
   },
   {

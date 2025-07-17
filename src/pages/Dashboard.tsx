@@ -14,14 +14,10 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
-  const currentCommission = 8750;
-  const monthlyGoal = 12000;
-  const progressPercentage = (currentCommission / monthlyGoal) * 100;
-
   const stats = [
     {
       title: "Provision diesen Monat",
-      value: `${currentCommission.toLocaleString()} €`,
+      value: "8.750 €",
       change: "+12,5%",
       trend: "up",
       icon: DollarSign,
@@ -36,20 +32,20 @@ export default function Dashboard() {
       description: "Gesamtumsatz diesen Monat"
     },
     {
-      title: "Zielfortschritt",
-      value: `${Math.round(progressPercentage)}%`,
-      change: "3 Tage voraus",
-      trend: "up",
-      icon: Target,
-      description: "des Monatsziels"
+      title: "Offene Zahlungen",
+      value: "2.150 €",
+      change: "-3%",
+      trend: "down",
+      icon: Calendar,
+      description: "Ausstehende Provisionen"
     },
     {
-      title: "Aktuelle Stufe",
-      value: "Gold",
-      change: "Nächste: Platin",
-      trend: "neutral",
-      icon: Award,
-      description: "Provisionsstufe"
+      title: "Transaktionen",
+      value: "47",
+      change: "+15%",
+      trend: "up",
+      icon: FileText,
+      description: "Diesen Monat"
     }
   ];
 
@@ -60,12 +56,6 @@ export default function Dashboard() {
     { id: 4, client: "Innovation Labs", product: "Basis-Plan", amount: 5000, commission: 300, date: "12.01.2024" },
   ];
 
-  const tierProgress = [
-    { tier: "Bronze", threshold: 5000, reached: true },
-    { tier: "Silber", threshold: 8000, reached: true },
-    { tier: "Gold", threshold: 10000, reached: false, current: true },
-    { tier: "Platin", threshold: 15000, reached: false },
-  ];
 
   return (
     <div className="space-y-6">
@@ -120,42 +110,55 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Goal Progress */}
+        {/* Kommende Auszahlungen */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Monatlicher Zielfortschritt</CardTitle>
-            <CardDescription>Verfolgen Sie Ihren Fortschritt zu Ihrem Provisionsziel für diesen Monat</CardDescription>
+            <CardTitle>Kommende Auszahlungen</CardTitle>
+            <CardDescription>Ihre nächsten Provisionszahlungen</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Aktuell: {currentCommission.toLocaleString()} €</span>
-              <span className="text-sm text-muted-foreground">Ziel: {monthlyGoal.toLocaleString()} €</span>
-            </div>
-            <Progress value={progressPercentage} className="h-3" />
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-success font-medium">{Math.round(progressPercentage)}% erreicht</span>
-              <span className="text-muted-foreground">
-                {(monthlyGoal - currentCommission).toLocaleString()} € verbleibend
-              </span>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center p-3 bg-success/10 border border-success/20 rounded-lg">
+                <div>
+                  <p className="font-medium text-foreground">Juni 2024</p>
+                  <p className="text-sm text-muted-foreground">Fällig: 15.06.2024</p>
+                </div>
+                <span className="font-bold text-success">8.750 €</span>
+              </div>
+              <div className="flex justify-between items-center p-3 border rounded-lg">
+                <div>
+                  <p className="font-medium text-foreground">Juli 2024</p>
+                  <p className="text-sm text-muted-foreground">Voraussichtlich: 15.07.2024</p>
+                </div>
+                <span className="font-bold text-muted-foreground">5.200 €</span>
+              </div>
+              <div className="flex justify-between items-center p-3 border rounded-lg">
+                <div>
+                  <p className="font-medium text-foreground">August 2024</p>
+                  <p className="text-sm text-muted-foreground">Geschätzt: 15.08.2024</p>
+                </div>
+                <span className="font-bold text-muted-foreground">4.800 €</span>
+              </div>
             </div>
             
-            {/* Tier Progress */}
+            {/* Monatliche Entwicklung */}
             <div className="mt-6">
-              <h4 className="text-sm font-medium mb-3">Provisionsstufen</h4>
+              <h4 className="text-sm font-medium mb-3">Monatliche Entwicklung</h4>
               <div className="space-y-2">
-                {tierProgress.map((tier) => (
-                  <div key={tier.tier} className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
+                {[
+                  { monat: "Mai 2024", betrag: "8.750 €", status: "Aktuell" },
+                  { monat: "April 2024", betrag: "7.200 €", status: "Ausgezahlt" },
+                  { monat: "März 2024", betrag: "9.100 €", status: "Ausgezahlt" },
+                  { monat: "Februar 2024", betrag: "6.850 €", status: "Ausgezahlt" },
+                ].map((eintrag, index) => (
+                  <div key={index} className="flex justify-between items-center p-2 rounded">
                     <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full ${
-                        tier.reached ? 'bg-success' : 
-                        tier.current ? 'bg-warning' : 'bg-muted'
-                      }`} />
-                      <span className={`text-sm font-medium ${tier.current ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {tier.tier}
-                      </span>
-                      {tier.current && <Badge variant="secondary" className="text-xs">Aktuell</Badge>}
+                      <span className="text-sm font-medium">{eintrag.monat}</span>
+                      <Badge variant={eintrag.status === "Aktuell" ? "default" : "outline"} className="text-xs">
+                        {eintrag.status}
+                      </Badge>
                     </div>
-                    <span className="text-sm text-muted-foreground">{tier.threshold.toLocaleString()} €</span>
+                    <span className="font-bold">{eintrag.betrag}</span>
                   </div>
                 ))}
               </div>
@@ -171,15 +174,15 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             <Button className="w-full justify-start" variant="outline">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Leistungsbericht anzeigen
+              <DollarSign className="w-4 h-4 mr-2" />
+              Provisionsrechner
             </Button>
             <Button className="w-full justify-start" variant="outline">
               <FileText className="w-4 h-4 mr-2" />
               Verkaufsdaten hochladen
             </Button>
             <Button className="w-full justify-start" variant="outline">
-              <Target className="w-4 h-4 mr-2" />
+              <TrendingUp className="w-4 h-4 mr-2" />
               Was-Wäre-Wenn-Rechner
             </Button>
             <Button className="w-full justify-start" variant="outline">

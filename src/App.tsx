@@ -6,10 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Commission from "./pages/Commission";
-import Performance from "./pages/Performance";
 import Sales from "./pages/Sales";
 import Products from "./pages/Products";
-import Targets from "./pages/Targets";
 import Reps from "./pages/Reps";
 import Plans from "./pages/Plans";
 import Notifications from "./pages/Notifications";
@@ -28,10 +26,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/commission" element={<Commission />} />
-            <Route path="/performance" element={<Performance />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/targets" element={<Targets />} />
             <Route path="/reps" element={<Reps />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/notifications" element={<Notifications />} />
